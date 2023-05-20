@@ -4,7 +4,7 @@ import com.example.testmockito.Exception.EmployeeAlreadyAddedException;
 import com.example.testmockito.Exception.EmployeeNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +13,7 @@ import java.util.Map;
 public class EmployeeService {
 
     private final ValidateService validateService;
-    Map<String, Employee> employee = new HashMap<>(Map.of(
+    private Map<String, Employee> employee = new HashMap<>(Map.of(
             "1", new Employee("Альберт", "Миронов", 4, 20000),
             "2", new Employee("Виктор", "Меньшиков", 3, 40000),
             "3", new Employee("Андрей", "Абавикян", 2, 30000),
@@ -49,8 +49,6 @@ public class EmployeeService {
         employee.values().remove(findEmployee);
         return findEmployee;
     }
-
-
     public Employee findEmployee(String name, String surname) {
         Employee newEmployee = new Employee(name, surname, 0, 0);
 
@@ -60,39 +58,7 @@ public class EmployeeService {
                 .orElseThrow(EmployeeNotFoundException::new);
     }
 
-    public String print() {
-        return employee.values().toString();
-    }
-
-    public Employee findMaxSalaryDepartment(Integer department) {
-        return employee.values().stream()
-                .filter(employee -> employee.getDepartment() == department)
-                .max(Comparator.comparingInt(Employee::getSalary))
-                .orElseThrow(EmployeeNotFoundException::new);
-    }
-
-    public Employee findMinSalaryDepartment(Integer department) {
-        return employee.values().stream()
-                .filter(employee -> employee.getDepartment() == department)
-                .min(Comparator.comparingInt(Employee::getSalary))
-                .orElseThrow(EmployeeNotFoundException::new);
-    }
-
-    public List<Employee> printEmployeeInTheDepartment(Integer department) {
-
-        List<Employee> result = employee.values().stream()
-                .filter(employee -> employee.getDepartment() == department)
-                .toList();
-
-        if (result.isEmpty()) {
-            throw new EmployeeNotFoundException();
-        }
-        return result;
-    }
-
-    public List<Employee> printDepartmentsEmployee() {
-        return employee.values().stream()
-                .sorted(Comparator.comparingInt(Employee::getDepartment))
-                .toList();
+    public List<Employee> getAll(){
+        return new ArrayList<>(employee.values());
     }
 }

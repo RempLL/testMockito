@@ -1,6 +1,7 @@
 package com.example.testmockito.Service;
 
 import com.example.testmockito.Exception.IncorrectNameException;
+import com.example.testmockito.Exception.IncorrectSurnameException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class ValidateService {
 
     public String validateSurname(String surname){
         if(!StringUtils.isAlpha(surname)){
-            throw new IncorrectNameException();
+            throw new IncorrectSurnameException();
         }
         return StringUtils.capitalize(surname.toLowerCase());
     }
