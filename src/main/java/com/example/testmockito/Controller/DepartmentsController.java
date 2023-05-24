@@ -17,6 +17,7 @@ public class DepartmentsController {
         this.departmentsService = departmentsService;
     }
 
+
     @GetMapping("/department/{id}/salary/max")
     public double findMaxSalaryDepartment(@PathVariable("id") Integer department) {
         return departmentsService.findMaxSalaryDepartment(department);
